@@ -22,7 +22,7 @@ class TestimonialForm
                 \Filament\Forms\Components\FileUpload::make('video_path')
                     ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/ogg'])
                     ->directory('testimonials')
-                    ->maxSize(10240)
+                    ->maxSize(51200)
                     ->default(null),
                 TextInput::make('sort_order')
                     ->required()

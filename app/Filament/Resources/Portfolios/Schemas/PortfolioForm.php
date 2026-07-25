@@ -16,10 +16,10 @@ class PortfolioForm
                     ->required(),
                 FileUpload::make('before_image')
                     ->image()
-                    ->maxSize(10240),
+                    ->maxSize(51200),
                 FileUpload::make('after_image')
                     ->image()
-                    ->maxSize(10240),
+                    ->maxSize(51200),
                 TextInput::make('sort_order')
                     ->required()
                     ->numeric()
