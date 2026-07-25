@@ -15,6 +15,7 @@ class MediaAssetForm
                     ->default(null),
                 \Filament\Forms\Components\FileUpload::make('file_path')
                     ->directory('media')
+                    ->maxSize(10240)
                     ->required(),
             ]);
     }

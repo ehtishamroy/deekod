@@ -15,9 +15,11 @@ class PortfolioForm
                 TextInput::make('title')
                     ->required(),
                 FileUpload::make('before_image')
-                    ->image(),
+                    ->image()
+                    ->maxSize(10240),
                 FileUpload::make('after_image')
-                    ->image(),
+                    ->image()
+                    ->maxSize(10240),
                 TextInput::make('sort_order')
                     ->required()
                     ->numeric()

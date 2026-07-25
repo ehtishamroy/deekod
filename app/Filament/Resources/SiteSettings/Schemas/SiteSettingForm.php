@@ -20,9 +20,11 @@ class SiteSettingForm
                     ->default(null)
                     ->columnSpanFull(),
                 FileUpload::make('og_image')
-                    ->image(),
+                    ->image()
+                    ->maxSize(10240),
                 FileUpload::make('favicon')
-                    ->image(),
+                    ->image()
+                    ->maxSize(10240),
                 TextInput::make('calendly_link')
                     ->required()
                     ->default('https://calendly.com/YOUR-LINK'),
