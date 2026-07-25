@@ -19,6 +19,8 @@ class LeadController extends Controller
         $email = $validated['email'];
         $phone = $validated['phone'];
 
+        \App\Models\Lead::create($validated);
+
         // Send email to owner
         Mail::raw(
             "You have received a new leak report request.\n\nWebsite: {$website}\nEmail: {$email}\nPhone: {$phone}",

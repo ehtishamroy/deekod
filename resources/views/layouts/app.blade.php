@@ -3,13 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deekod — Your chairs should be full. Let's fix that in 15 minutes.</title>
-<meta name="description" content="Most dental practices quietly lose patients every single day — missed calls, a slow website, dormant patient lists. We find the leaks and fix them. Book a free 15-minute call.">
-<meta property="og:title" content="Deekod — Your chairs should be full. Let's fix that in 15 minutes.">
-<meta property="og:description" content="Most dental practices quietly lose patients every single day — missed calls, a slow website, dormant patient lists. We find the leaks and fix them. Book a free 15-minute call.">
+<title>{{ $siteSetting?->site_title ?? "Deekod — Your chairs should be full." }}</title>
+<meta name="description" content="{{ $siteSetting?->seo_description ?? 'Most dental practices quietly lose patients every single day.' }}">
+<meta property="og:title" content="{{ $siteSetting?->site_title ?? "Deekod — Your chairs should be full." }}">
+<meta property="og:description" content="{{ $siteSetting?->seo_description ?? 'Most dental practices quietly lose patients every single day.' }}">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://deekod.com/">
-<meta property="og:image" content="https://deekod.com/images/og-image.jpg">
+<meta property="og:url" content="{{ request()->url() }}">
+<meta property="og:image" content="{{ $siteSetting?->og_image ? Storage::url($siteSetting->og_image) : 'https://deekod.com/images/og-image.jpg' }}">
+@if($siteSetting?->favicon)
+<link rel="icon" href="{{ Storage::url($siteSetting->favicon) }}">
+@endif
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://deekod.com/">
 <script type="application/ld+json">
@@ -385,7 +388,7 @@ footer p{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;margin-top
 
 <!-- ============ STICKY BAR ============ -->
 <div class="sticky" id="sticky">
-  <div class="wrap sticky-in">
+  <div class="wrap sticky-in" style="padding-left: 2rem;">
     <p><b>Losing patients you can't see?</b><span class="hide"> A free 15-min call shows you exactly where.</span></p>
     <a class="btn" href="#book">Book the call →</a>
   </div>

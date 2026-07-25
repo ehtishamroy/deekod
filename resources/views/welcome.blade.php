@@ -16,10 +16,12 @@
     </div>
     <p class="orpath rv">Not ready to book? <a href="#" class="open-lead-modal">Send us your website URL</a> and we'll reply with 3 leaks — free, no call needed. Even if you never hire us.</p>
     <div class="halo rv" aria-label="Trust badges">
-      <span class="b"><i aria-hidden="true">◆</i> UK Registered Ltd</span>
-      <span class="b"><i aria-hidden="true">◆</i> HIPAA-Compliant Setup</span>
-      <span class="b"><i aria-hidden="true">◆</i> Stripe Secure Invoicing</span>
-      <span class="b"><i aria-hidden="true">◆</i> Live in 14 Days</span>
+      <span class="b"><i aria-hidden="true">◆</i> No Long-Term Contracts</span>
+      <span class="b"><i aria-hidden="true">◆</i> Month-to-Month</span>
+      <span class="b"><i aria-hidden="true">◆</i> Cancel Anytime</span>
+      <span class="b"><i aria-hidden="true">◆</i> 50% Upfront, 50% at Launch</span>
+      <span class="b"><i aria-hidden="true">◆</i> You Own Everything</span>
+      <span class="b"><i aria-hidden="true">◆</i> No Lock-In Contracts</span>
     </div>
     </div>
 
@@ -195,6 +197,31 @@
     </div>
     <p class="micro rv" style="text-align:center;margin-top:1.6rem">Tell us your budget on the call. We'll show you the best possible plan inside it — even if that plan is small to start.</p>
 
+    @foreach($portfolios as $portfolio)
+    <div class="ba-grid rv" aria-label="Before and after concept" style="margin-bottom: 2rem;">
+      <div class="ba before">
+        <div class="cap">Typical template site</div>
+        <div class="imgslot light r169" style="border-radius:0;border:0;border-top:1px solid var(--line)">
+          @if($portfolio->before_image)
+              <img src="{{ Storage::url($portfolio->before_image) }}" alt="Before" loading="lazy">
+          @else
+              <span class="ph">🖼️ "BEFORE" SCREENSHOT<br>1200×675px<br>Outdated/slow dental site<br>(blur the practice name)</span>
+          @endif
+        </div>
+      </div>
+      <div class="ba after">
+        <div class="cap">{{ $portfolio->title }}</div>
+        <div class="imgslot r169" style="border-radius:0;border:0">
+          @if($portfolio->after_image)
+              <img src="{{ Storage::url($portfolio->after_image) }}" alt="After" loading="lazy">
+          @else
+              <span class="ph">🖼️ "AFTER" SCREENSHOT<br>1200×675px<br>One of your real dental builds</span>
+          @endif
+        </div>
+      </div>
+    </div>
+    @endforeach
+    @if($portfolios->isEmpty())
     <div class="ba-grid rv" aria-label="Before and after concept">
       <!-- 🖼️ BEFORE — real screenshot of an outdated/template dental site (blur or don't name the practice) -->
       <div class="ba before">
@@ -211,6 +238,7 @@
         </div>
       </div>
     </div>
+    @endif
     </div>
   </div>
 </section>
@@ -276,7 +304,7 @@
         <div class="vmeta">
           <b>[Dr. Name]</b>
           <span>[Practice] · [City, State]</span>
-          <span class="angle">Visibility &amp; new patients</span>
+
         </div>
       </article>
 
@@ -365,7 +393,7 @@
 
     <div class="hero-cta rv">
       <!-- REPLACE href with your Calendly link -->
-      <a class="btn pulse" href="https://calendly.com/YOUR-LINK" target="_blank" rel="noopener">Book my free 15-minute call →</a>
+      <a class="btn pulse" href="{{ $siteSetting?->calendly_link ?? 'https://calendly.com/YOUR-LINK' }}" target="_blank" rel="noopener">Book my free 15-minute call →</a>
       <span class="micro" style="color: #fff;">No budget? Say so on the call — we'll show you the #1 free fix first, even if you never hire us.</span>
     </div>
 
