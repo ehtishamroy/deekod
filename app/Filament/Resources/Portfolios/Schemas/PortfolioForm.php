@@ -16,9 +16,15 @@ class PortfolioForm
                     ->required(),
                 FileUpload::make('before_image')
                     ->image()
+                    ->disk('public')
+                    ->directory('portfolio')
+                    ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/gif', 'image/webp'])
                     ->maxSize(51200),
                 FileUpload::make('after_image')
                     ->image()
+                    ->disk('public')
+                    ->directory('portfolio')
+                    ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/gif', 'image/webp'])
                     ->maxSize(51200),
                 TextInput::make('sort_order')
                     ->required()
