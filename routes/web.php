@@ -12,17 +12,42 @@ Route::post('/lead', [LeadController::class, 'store'])->name('lead.store');
 
 Route::get('/fix-storage', function () {
     $target = storage_path('app/public');
-    
-    // This perfectly finds your active public folder (whether it's public_html or public)
-    $link = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    $docRoot = $_SERVER['DOCUMENT_ROOT'] ?? 'NOT SET';
+    $publicPath = public_path();
+    $link1 = $docRoot . '/storage';
+    $link2 = $publicPath . '/storage';
 
-    if (file_exists($link) || is_link($link)) {
-        return "Error: A storage folder or broken link already exists exactly here: <br><b>" . $link . "</b><br><br>Please go to your Hostinger File Manager, find that exact folder, delete 'storage', and refresh this page.";
+    $output = "<pre>";
+    $output .= "DOCUMENT_ROOT: " . $docRoot . "\n";
+    $output .= "public_path(): " . $publicPath . "\n";
+    $output .= "storage target: " . $target . "\n";
+    $output .= "storage target exists? " . (file_exists($target) ? 'YES' : 'NO') . "\n";
+    $output .= "\n--- Link via DOCUMENT_ROOT ---\n";
+    $output .= "link path: " . $link1 . "\n";
+    $output .= "exists? " . (file_exists($link1) ? 'YES' : 'NO') . "\n";
+    $output .= "is_link? " . (is_link($link1) ? 'YES' : 'NO') . "\n";
+    $output .= "\n--- Link via public_path() ---\n";
+    $output .= "link path: " . $link2 . "\n";
+    $output .= "exists? " . (file_exists($link2) ? 'YES' : 'NO') . "\n";
+    $output .= "is_link? " . (is_link($link2) ? 'YES' : 'NO') . "\n";
+    $output .= "</pre>";
+
+    // Try to remove any broken existing link and recreate
+    foreach ([$link1, $link2] as $link) {
+        if (is_link($link)) {
+            unlink($link); // Remove broken symlink
+        }
     }
 
-    if (symlink($target, $link)) {
-        return "✅ SUCCESS! Your videos will now load. <br>Linked <b>" . $target . "</b> <br>To <b>" . $link . "</b>";
+    // Try creating with DOCUMENT_ROOT path
+    if (!file_exists($link1) && symlink($target, $link1)) {
+        return $output . "<br><b style='color:green'>✅ SUCCESS via DOCUMENT_ROOT! Link created at: " . $link1 . "</b>";
     }
-    
-    return "Failed to create link. Check folder permissions.";
+
+    // Fallback: try public_path
+    if (!file_exists($link2) && symlink($target, $link2)) {
+        return $output . "<br><b style='color:green'>✅ SUCCESS via public_path! Link created at: " . $link2 . "</b>";
+    }
+
+    return $output . "<br><b style='color:red'>❌ Failed. Copy the paths above and send them so I can fix this.</b>";
 });
