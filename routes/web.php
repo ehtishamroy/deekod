@@ -12,15 +12,17 @@ Route::post('/lead', [LeadController::class, 'store'])->name('lead.store');
 
 Route::get('/fix-storage', function () {
     $target = storage_path('app/public');
-    $link = public_path('storage');
+    
+    // This perfectly finds your active public folder (whether it's public_html or public)
+    $link = $_SERVER['DOCUMENT_ROOT'] . '/storage';
 
-    if (file_exists($link)) {
-        return "A storage folder or link already exists. Please go to your Hostinger File Manager, open your public folder (or public_html), delete the 'storage' folder/link, and refresh this page.";
+    if (file_exists($link) || is_link($link)) {
+        return "Error: A storage folder or broken link already exists exactly here: <br><b>" . $link . "</b><br><br>Please go to your Hostinger File Manager, find that exact folder, delete 'storage', and refresh this page.";
     }
 
     if (symlink($target, $link)) {
-        return "SUCCESS! The storage link was created. Your videos will now load.";
+        return "✅ SUCCESS! Your videos will now load. <br>Linked <b>" . $target . "</b> <br>To <b>" . $link . "</b>";
     }
     
-    return "Failed to create link. Check permissions.";
+    return "Failed to create link. Check folder permissions.";
 });
