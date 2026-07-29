@@ -41,7 +41,10 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => public_path('uploads'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/uploads',
+            // Relative URL: files live in public/uploads and are served directly
+            // (no storage:link symlink). Keeping this relative makes image URLs
+            // resolve against whatever host serves the site, regardless of APP_URL.
+            'url' => '/uploads',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

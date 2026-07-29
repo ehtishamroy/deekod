@@ -6,7 +6,7 @@
 @php
     $metaTitle = $siteSetting?->site_title ?? 'Deekod — Your chairs should be full.';
     $metaDescription = $siteSetting?->seo_description ?? 'Most dental practices quietly lose patients every single day.';
-    $metaImage = $siteSetting?->og_image ? Storage::url($siteSetting->og_image) : 'https://deekod.com/images/og-image.jpg';
+    $metaImage = $siteSetting?->og_image ? url(Storage::url($siteSetting->og_image)) : 'https://deekod.com/images/og-image.jpg';
 @endphp
 <title>{{ $metaTitle }}</title>
 <meta name="description" content="{{ $metaDescription }}">
