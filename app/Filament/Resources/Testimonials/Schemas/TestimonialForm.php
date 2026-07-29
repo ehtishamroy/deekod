@@ -20,6 +20,7 @@ class TestimonialForm
                 TextInput::make('outcome')
                     ->default(null),
                 \Filament\Forms\Components\FileUpload::make('video_path')
+                    ->disk('public')
                     ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/ogg'])
                     ->directory('testimonials')
                     ->maxSize(51200)

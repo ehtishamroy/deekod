@@ -3,17 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ $siteSetting?->site_title ?? "Deekod — Your chairs should be full." }}</title>
-<meta name="description" content="{{ $siteSetting?->seo_description ?? 'Most dental practices quietly lose patients every single day.' }}">
-<meta property="og:title" content="{{ $siteSetting?->site_title ?? "Deekod — Your chairs should be full." }}">
-<meta property="og:description" content="{{ $siteSetting?->seo_description ?? 'Most dental practices quietly lose patients every single day.' }}">
+@php
+    $metaTitle = $siteSetting?->site_title ?? 'Deekod — Your chairs should be full.';
+    $metaDescription = $siteSetting?->seo_description ?? 'Most dental practices quietly lose patients every single day.';
+    $metaImage = $siteSetting?->og_image ? Storage::url($siteSetting->og_image) : 'https://deekod.com/images/og-image.jpg';
+@endphp
+<title>{{ $metaTitle }}</title>
+<meta name="description" content="{{ $metaDescription }}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0C2B23">
+<meta property="og:title" content="{{ $metaTitle }}">
+<meta property="og:description" content="{{ $metaDescription }}">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Deekod Digital">
+<meta property="og:locale" content="en_GB">
 <meta property="og:url" content="{{ request()->url() }}">
-<meta property="og:image" content="{{ $siteSetting?->og_image ? Storage::url($siteSetting->og_image) : 'https://deekod.com/images/og-image.jpg' }}">
+<meta property="og:image" content="{{ $metaImage }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ $metaTitle }}">
 @if($siteSetting?->favicon)
 <link rel="icon" href="{{ Storage::url($siteSetting->favicon) }}">
 @endif
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $metaTitle }}">
+<meta name="twitter:description" content="{{ $metaDescription }}">
+<meta name="twitter:image" content="{{ $metaImage }}">
 <link rel="canonical" href="https://deekod.com/">
 <script type="application/ld+json">
 {

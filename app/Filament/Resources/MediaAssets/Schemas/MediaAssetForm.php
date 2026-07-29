@@ -14,6 +14,7 @@ class MediaAssetForm
                 TextInput::make('name')
                     ->default(null),
                 \Filament\Forms\Components\FileUpload::make('file_path')
+                    ->disk('public')
                     ->directory('media')
                     ->maxSize(51200)
                     ->required(),
